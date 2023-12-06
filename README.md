@@ -8,6 +8,12 @@ $UPN = "MyAdminUser@contoso.ca"
 Connect-ExchangeOnline -UserPrincipalName $UPN
 ```
 
+Then:
+- initiate a collection variable,
+- get all mailboxes,
+- for each mailbox and for each X500 address on that mailbox, create a PSCustomObject entry with its Primary SMTP Address, and each X500 address, and store it in the collection variable
+- at the end, either dump that variable to display the table (```$Collection | ft```) or export it in a CSV file
+
 ```PowerShell
 $Collection = @()
 Get-Mailbox | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
@@ -25,5 +31,9 @@ Get-Mailbox | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expre
                     
 } # <= end of Foreach loop after the pipe on Line 14
 
+# If you want to directly dump the results:
 $Collection | ft
+
+# If you want to store it in a CSV file:
+$Collection | Export-CSV -NoTypeInfo c:\temp\X500AddressesExport.csv
 ```
