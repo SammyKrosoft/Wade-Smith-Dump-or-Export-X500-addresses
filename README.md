@@ -50,7 +50,7 @@ If you want to use a CSV file as an input, you can enclose the "Get-Mailbox" par
 
 ```PowerShell
 # THIS SCRIPT GETS THE MAILBOXES IN THE SAMPLE INPUTCSVFILE.CSV, WHICH PATH IS STORED IN THE $CSVInputFile VARIABLE.
-# NOTE: THE CSV INPUT FILE MUST HAVE A HEADAER CALLED PrimarySMTPAddress (case insensitive) FOR THE SCRIPT TO GET THE PRIMARY SMTP VALUE.
+# NOTE: THE CSV INPUT FILE MUST HAVE A HEADER CALLED PrimarySMTPAddress (case insensitive) FOR THE SCRIPT TO GET THE PRIMARY SMTP VALUE.
 
 $Collection = @()
 
