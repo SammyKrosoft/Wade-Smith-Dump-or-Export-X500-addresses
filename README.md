@@ -40,9 +40,13 @@ $Collection | ft
 $Collection | Export-CSV -NoTypeInfo c:\temp\X500AddressesExport.csv
 ```
 
-## Script getting mailboxes from a CSV input file (need a column or header named PrimarySMTPAddress)
+## Script getting mailboxes from a CSV input file
 
-Or if you want to use a CSV file as an input, you can enclose the "Get-Mailbox" part inside a ```Foreach ($Item in Import-CSV $CSVInputFile) { ... }``` loop, below is a sample one (tested):
+If you want to use a CSV file as an input, you can enclose the "Get-Mailbox" part inside a ```Foreach ($Item in Import-CSV $CSVInputFile) { ... }``` loop, below is a sample one (tested):
+
+> NOTE1: the CSV input file must have a column or header named PrimarySMTPAddress for the below script to work
+
+> NOTE2: update/customize the Input CSV file path from the $CSVInputFile variable to match your own input file
 
 ```PowerShell
 # THIS SCRIPT GETS THE MAILBOXES IN THE SAMPLE INPUTCSVFILE.CSV, WHICH PATH IS STORED IN THE $CSVInputFile VARIABLE.
