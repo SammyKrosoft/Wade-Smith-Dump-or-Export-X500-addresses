@@ -37,3 +37,7 @@ $Collection | ft
 # If you want to store it in a CSV file:
 $Collection | Export-CSV -NoTypeInfo c:\temp\X500AddressesExport.csv
 ```
+
+Here is a sample output, from the exported CSV opened in Excel:
+
+<img width="654" alt="image" src="https://github.com/SammyKrosoft/Wade-Smith-Dump-or-Export-X500-addresses/assets/33433229/7185b289-f059-46d5-979b-115da64ff23b">
