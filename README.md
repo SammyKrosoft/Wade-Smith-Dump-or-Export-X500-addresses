@@ -19,10 +19,8 @@ $Collection = @()
 Get-Mailbox | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
                     $UserPrimarySMTPAddress = $_.PrimarySMTPAddress
                     $ObjectX500Addresses = $_."x500 Email Address"
-                    $ObjectX500Addresses.count
                     if ($ObjectX500Addresses.count -gt 1){
                        Foreach ($X500address in $ObjectX500Addresses){ 
-                            write-host $X500address -ForegroundColor Green
                             $Collection += [pscustomobject]@{PrimarySMTPAddress = $UserPrimarySMTPAddress; 'x500 Email Address' = $X500address}
                             }
                     } Elseif($ObjectX500Addresses.count -eq 1) {
