@@ -14,6 +14,8 @@ Then:
 - for each mailbox and for each X500 address on that mailbox, create a PSCustomObject entry with its Primary SMTP Address, and each X500 address, and store it in the collection variable
 - at the end, either dump that variable to display the table (```$Collection | ft```) or export it in a CSV file
 
+## Script getting all mailboxes (no CSV input file)
+
 ```PowerShell
 # THIS SCRIPT GETS ALL THE MAILBOXES OF THE TENANT TO GET THEIR X500 ADDRESS
 
@@ -37,6 +39,8 @@ $Collection | ft
 # If you want to store it in a CSV file:
 $Collection | Export-CSV -NoTypeInfo c:\temp\X500AddressesExport.csv
 ```
+
+## Script getting mailboxes from a CSV input file (need a column or header named PrimarySMTPAddress)
 
 Or if you want to use a CSV file as an input, you can enclose the "Get-Mailbox" part inside a ```Foreach ($Item in Import-CSV $CSVInputFile) { ... }``` loop, below is a sample one (tested):
 
