@@ -15,6 +15,8 @@ Then:
 - at the end, either dump that variable to display the table (```$Collection | ft```) or export it in a CSV file
 
 ```PowerShell
+# THIS SCRIPT GETS ALL THE MAILBOXES OF THE TENANT TO GET THEIR X500 ADDRESS
+
 $Collection = @()
 Get-Mailbox | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
                     $UserPrimarySMTPAddress = $_.PrimarySMTPAddress
@@ -39,13 +41,17 @@ $Collection | Export-CSV -NoTypeInfo c:\temp\X500AddressesExport.csv
 Or if you want to use a CSV file as an input, you can enclose the "Get-Mailbox" part inside a ```Foreach ($Item in Import-CSV $CSVInputFile) { ... }``` loop, below is a sample one (tested):
 
 ```PowerShell
+# THIS SCRIPT GETS THE MAILBOXES IN THE SAMPLE INPUTCSVFILE.CSV, WHICH PATH IS STORED IN THE $CSVInputFile VARIABLE.
+# NOTE: THE CSV INPUT FILE MUST HAVE A HEADAER CALLED PrimarySMTPAddress (case insensitive) FOR THE SCRIPT TO GET THE PRIMARY SMTP VALUE.
+
 $Collection = @()
 
+# UPDATE THIS VARIABLE TO YOUR INPUT CSV FILE
 $CSVInputFile = "c:\temp\InputCSVFile.csv"
 
 Foreach ($Item in Import-CSV $CSVInputFile) {
 
-        Get-Mailbox $Item.PrimarySMTPAddress | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "smtp:*"}}} | Foreach {
+        Get-Mailbox $Item.PrimarySMTPAddress | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
                             $UserPrimarySMTPAddress = $_.PrimarySMTPAddress
                             # $ObjectX500Addresses = $_."x500 Email Address"
                             if ($ObjectX500Addresses.count -gt 1){
