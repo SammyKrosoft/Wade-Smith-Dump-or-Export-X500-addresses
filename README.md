@@ -69,7 +69,7 @@ Foreach ($Item in $AllItems) {
 
         Get-Mailbox $Item.PrimarySMTPAddress | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
                             $UserPrimarySMTPAddress = $_.PrimarySMTPAddress
-                            # $ObjectX500Addresses = $_."x500 Email Address"
+                            $ObjectX500Addresses = $_."x500 Email Address"
                             if ($ObjectX500Addresses.count -gt 1){
                                Foreach ($X500address in $ObjectX500Addresses){ 
                                     # write-host $X500address -ForegroundColor Green
