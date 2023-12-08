@@ -57,10 +57,12 @@ $Collection = @()
 # UPDATE THIS VARIABLE TO YOUR INPUT CSV FILE
 $CSVInputFile = "c:\temp\InputCSVFile.csv"
 
+$AllItems = Import-Csv $CSVInputFile
+
 $CountItems = $AllItems.count
 $Count = 0
 
-Foreach ($Item in Import-CSV $CSVInputFile) {
+Foreach ($Item in $AllItems) {
 
         $Count++
         Write-Progress -Activity "Processing items in CSV" -Status "Processing mailbox $($Item.PrimarySMTPAddress)" -PercentComplete (($Count/$CountItems)*100)
