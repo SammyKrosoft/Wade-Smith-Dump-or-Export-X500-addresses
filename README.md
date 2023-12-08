@@ -57,7 +57,13 @@ $Collection = @()
 # UPDATE THIS VARIABLE TO YOUR INPUT CSV FILE
 $CSVInputFile = "c:\temp\InputCSVFile.csv"
 
+$CountItems = $AllItems.count
+$Count = 0
+
 Foreach ($Item in Import-CSV $CSVInputFile) {
+
+        $Count++
+        Write-Progress -Activity "Processing items in CSV" -Status "Processing mailbox $($Item.PrimarySMTPAddress)" -PercentComplete (($Count/$CountItems)*100)
 
         Get-Mailbox $Item.PrimarySMTPAddress | Select-Object PrimarySMTPAddress,@{Name="x500 Email Address";Expression={$_.EmailAddresses |Where-Object {$_ -match "x500:*"}}} | Foreach {
                             $UserPrimarySMTPAddress = $_.PrimarySMTPAddress
